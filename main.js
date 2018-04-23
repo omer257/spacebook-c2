@@ -9,7 +9,8 @@ const getTime = () => {
 var addPost = (string, num) => {
     var post = {
         text: string,
-        id: num
+        id: num,
+        comments: []
     };
     posts.push(post);
 };
@@ -17,9 +18,21 @@ var addPost = (string, num) => {
 var renderPost = () => {
     $(".posts").empty();
     for (var i = 0; i < posts.length; i++) {
-        $(".posts").append("<p " + "class = 'post' data-id = " + posts[i].id + "> " + posts[i].text + " " + "<button type = 'button' class = 'btn btn-danger remove' >REMOVE</button> <input type='text' id= 'data-user' class = 'form-control' placeholder = 'Username'> <input type='text' id= 'data-comment' class = 'form-control' placeholder = 'Comments'> <button type = 'button' class = 'btn btn-success add-comment' >SEND</button></p>");
+        $(".posts").append("<p " + "class = 'post' data-id = " +
+        posts[i].id + "> " + posts[i].text + " " + 
+        "<button type = 'button' class = 'btn btn-danger remove' >REMOVE</button> <br>"+
+        "<input type='text' id= 'data-user' class = 'foo' placeholder = 'Username'>"+
+        "<input type='text' id= 'data-comment' class = 'coo' placeholder = 'Comments'>"+
+        "<button type = 'button' class = 'btn btn-success add-comment' >SEND</button></p>");
     }
-}
+        for (i = 0; i < posts.length; i++) {
+        for(var j = 0; j < posts[i].comments.length; j++ ){
+            alert(posts[i].comments[j]["username"]);
+            $(".posts").append(posts[i].comments[j].username + " says: " + posts[i].comments[j].comment);
+             } 
+        } 
+    }
+
 
 $('.add-post').click(function () {
     var postInput = $('#post-name').val();
@@ -29,16 +42,21 @@ $('.add-post').click(function () {
 });
 
 $(".posts").on('click', '.add-comment', function () {
-    var sentId = $(this).parent().data().id;
-    var sentUser = $(this).parent().find('#data-user').val();
-    var sentComment = $(this).parent().find('#data-comment').val();
+    var clickedId = $(this).parent().data().id;
+    var sentUser = $('#data-user').val();
+    var sentComment = $('#data-comment').val();
     for (i = 0; i < posts.length; i++) {
-        if (posts[i].id === sentId) {
-            posts[i].username = sentUser;
-            posts[i].comment = sentComment;
+        if (posts[i].id === clickedId) {
+            var commObj = {
+                username: sentUser,
+                comment: sentComment
+            };
+            posts[i].comments.push(commObj);
         }
     }
-    $(".posts").append("<p>" + sentUser + " says: " + sentComment + "</p>");
+
+    //$(".posts").append("<p>" + sentUser + " says: " + sentComment + "</p>");
+    renderPost();
 });
 
 $(".posts").on('click', '.remove', function () {
