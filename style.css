@@ -5,3 +5,17 @@
 .show {
   display: block;
 }
+
+.comments-list {
+  height: 32px;
+  width: 224px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(60, 218, 99);
+}
+
+.remove-comment {
+  position: absolute;
+  left: 35%;
+  padding-top: 1px;
+}
