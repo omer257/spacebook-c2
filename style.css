@@ -1,9 +1,9 @@
 .comments-container {
-  display: none;
+  display: block;
 }
 
-.show {
-  display: block;
+.no-show {
+  display: none;
 }
 
 .comments-list {

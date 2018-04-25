@@ -48,14 +48,14 @@ var SpacebookApp = function () {
       var commentsContainer = '<div class="comments-container">' +
         '<input type="text" class="comment-name">' +
         '<button class="btn btn-primary add-comment">Post Comment</button>' +
-        renderComments(post.comments) +
+         + {{comment}}
         '</div>';
 
-      $posts.append('<div class="post" data-id=' + post.id + '>' +
-        '<a href="#" class="remove">remove</a> ' + '<a href="#" class="show-comments">comments</a> ' + post.text +
+      $posts.append('<div class="post" data-id=' + {{postId}} + '>' +
+        '<a href="#" class="remove">remove</a> ' + '<a href="#" class="show-comments">comments</a> ' + {{postText}} +
         commentsContainer + '</div>');
     }
-  }
+  }renderComments(post.comments) post.id post.text 
 
   var removePost = function (currentPost) {
     var $clickedPost = $(currentPost).closest('.post');
