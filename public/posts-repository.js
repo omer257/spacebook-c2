@@ -5,36 +5,50 @@ import postApi from './Api.js';
  */
 class PostsRepository {
     constructor() {
-        this.postApi = postApi;
+        // this.postApi = postApi;
         this.posts = [];
     }
-    async buildPosts() {
+    async initData() {
         console.log('calling');
-        let result = await this.postApi.fetch();
-        console.log(result);
+        let result = await postApi.fetch();
+        // console.log(result);
         //-------------------------
         this.posts = result;
         return this.posts;
     }
 
-    addPost(postText) {
-        this.posts.push({ text: postText, comments: [] });
-        //
-        $.ajax({
-                method: "POST",
-                url: '/posts',
-                data: this.posts,
+    async addPost(postText) {
+        var newPost = { text: postText };
+        let result = await $.ajax({
+            method: "POST",
+            url: '/posts',
+            data: newPost
+        })
+        this.posts.push(result)
+    }
 
+    async removePost(id) {
+        let result = await $.ajax({
+            method: "DELETE",
+            url: `/posts/` + id,
+        })
+    }
+
+
+    async addComment(newComment, postID) {
+        // this.posts[postIndex].comments.push(newComment);
+        //newComment is    { text: $comment.val(), user: $user.val() }
+        //get post id 
+
+        //send comments and id to node server 
+
+        // update 
+        let result = await $.ajax({
+                method: "PUT",
+                url: '/posts/' + postID,
+                data: newComment
             })
-            //
-    }
-
-    removePost(index) {
-        this.posts.splice(index, 1);
-    }
-
-    addComment(newComment, postIndex) {
-        this.posts[postIndex].comments.push(newComment);
+            // this.posts.push(result)
     };
 
     deleteComment(postIndex, commentIndex) {

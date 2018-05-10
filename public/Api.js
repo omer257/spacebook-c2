@@ -1,9 +1,9 @@
 class PostsApi {
     constructor() {}
-    fetch($input) {
+    fetch() {
         return $.ajax({
             method: "GET",
-            url: '/posts'
+            url: '/posts',
         })
     }
 }

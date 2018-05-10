@@ -16,5 +16,6 @@ var postSchema = new mongoose.Schema({
 });
 
 let Post = mongoose.model('post', postSchema)
-
+    // let Comment = mongoose.model('comment', commentSchema)
 module.exports = Post
+    // module.exports = Comment

@@ -8,13 +8,10 @@ let postsRepository = new PostsRepository();
 let postsRenderer = new PostsRenderer();
 let eventsHandler = new EventsHandler(postsRepository, postsRenderer);
 //-----------------------------------------------------------------------------------
-;
-//
-loadPage();
 async function loadPage() {
-    let data = await postsRepository.buildPosts()
+    let data = await postsRepository.initData();
     postsRenderer.renderPosts(data);
-    console.log(postsRepository.posts)
+    // console.log(postsRepository.posts);
 }
 //-----------------------------------------------------------------------------------
 eventsHandler.registerAddPost();
@@ -22,4 +19,5 @@ eventsHandler.registerRemovePost();
 eventsHandler.registerToggleComments();
 eventsHandler.registerAddComment();
 eventsHandler.registerRemoveComment();
+loadPage();
 //-----------------------------------------------------------------------------------
