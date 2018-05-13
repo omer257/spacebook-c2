@@ -20,8 +20,10 @@
             }
         }
 
-        renderComments(posts, postIndex) {
-            let post = $(".post")[postIndex];
+        async renderComments(posts, postIndex) {
+            // debugger
+            posts = await posts;
+            let post = await $(".post")[postIndex];
             let $commentsList = $(post).find('.comments-list');
             $commentsList.empty();
             let template = Handlebars.compile(this.$commentTemplate);

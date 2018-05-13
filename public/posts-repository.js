@@ -5,17 +5,15 @@ import postApi from './Api.js';
  */
 class PostsRepository {
     constructor() {
-        // this.postApi = postApi;
-        this.posts = [];
+        this.posts = this.initData();
     }
     async initData() {
-        console.log('calling');
+        // console.log('calling');
         let result = await postApi.fetch();
-        // console.log(result);
-        //-------------------------
         this.posts = result;
         return this.posts;
     }
+
 
     async addPost(postText) {
         var newPost = { text: postText };
@@ -34,26 +32,23 @@ class PostsRepository {
         })
     }
 
-
     async addComment(newComment, postID) {
-        // this.posts[postIndex].comments.push(newComment);
-        //newComment is    { text: $comment.val(), user: $user.val() }
-        //get post id 
-
-        //send comments and id to node server 
-
-        // update 
         let result = await $.ajax({
-                method: "PUT",
-                url: '/posts/' + postID,
-                data: newComment
-            })
-            // this.posts.push(result)
+            method: "PUT",
+            url: '/posts/' + postID,
+            data: newComment
+        })
     };
 
-    deleteComment(postIndex, commentIndex) {
-        this.posts[postIndex].comments.splice(commentIndex, 1);
-    };
+    async deleteComment(postID, commentID) { // neew more work !?!?!!
+
+        let result = await $.ajax({
+            method: "DELETE",
+            url: '/posts/' + postID + '/' + commentID,
+
+        })
+    }
 }
+
 
 export default PostsRepository

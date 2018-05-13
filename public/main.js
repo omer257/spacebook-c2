@@ -14,10 +14,11 @@ async function loadPage() {
     // console.log(postsRepository.posts);
 }
 //-----------------------------------------------------------------------------------
+loadPage();
 eventsHandler.registerAddPost();
 eventsHandler.registerRemovePost();
 eventsHandler.registerToggleComments();
 eventsHandler.registerAddComment();
 eventsHandler.registerRemoveComment();
-loadPage();
+
 //-----------------------------------------------------------------------------------

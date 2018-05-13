@@ -5,6 +5,15 @@ class EventsHandler {
         this.$posts = $(".posts");
     }
 
+    async p() {
+        console.log('calling')
+        let data = await this.postsRepository.initData();
+        this.postsRenderer.renderPosts(data);
+        return data
+            // console.log(.posts);
+    }
+
+
     registerAddPost() {
         $('#addpost').on('click', () => {
             let $input = $("#postText");
@@ -12,7 +21,7 @@ class EventsHandler {
                 alert("Please enter text!");
             } else {
                 this.postsRepository.addPost($input.val());
-                this.postsRenderer.renderPosts(this.postsRepository.posts);
+                this.postsRenderer.renderPosts(this.p());
                 $input.val("");
             }
         });
@@ -22,7 +31,7 @@ class EventsHandler {
         this.$posts.on('click', '.remove-post', (event) => {
             let id = $(event.currentTarget).closest('.post').attr("data-id");
             this.postsRepository.removePost(id);
-            this.postsRenderer.renderPosts(this.postsRepository.posts);
+            this.postsRenderer.renderPosts(this.p());
         });
     }
 
@@ -47,7 +56,7 @@ class EventsHandler {
             let newComment = { text: $comment.val(), user: $user.val() };
 
             this.postsRepository.addComment(newComment, postID);
-            this.postsRenderer.renderComments(this.postsRepository.posts, postIndex);
+            this.postsRenderer.renderComments(this.p(), postIndex);
             $comment.val("");
             $user.val("");
         });
@@ -57,10 +66,17 @@ class EventsHandler {
     registerRemoveComment() {
         this.$posts.on('click', '.remove-comment', (event) => {
             let $commentsList = $(event.currentTarget).closest('.post').find('.comments-list');
+            //
+            let postID = $(event.currentTarget).closest('.post').attr("data-id");
+            //
             let postIndex = $(event.currentTarget).closest('.post').index();
+            //
+            let commentID = $(event.currentTarget).closest('.comment').attr("data-id");
+            //
             let commentIndex = $(event.currentTarget).closest('.comment').index();
-            this.postsRepository.deleteComment(postIndex, commentIndex);
-            this.postsRenderer.renderComments(this.postsRepository.posts, postIndex);
+
+            this.postsRepository.deleteComment(postID, commentID);
+            this.postsRenderer.renderComments(this.p(), postIndex);
         });
     }
 }
